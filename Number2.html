@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number System Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+            background-color: #f4f4f4;
+            border-radius: 8px;
+            padding-bottom: 60px; 
+         
+        }
+
+        input {
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+            display: none;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+            background-color: burlywood;
+            border-radius: 8px;
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .back-button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .back-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html" class="back-button">Back</a>
+
+    <h1>Number System Converter</h1>
+    <p>Enter a number (in decimal, binary, octal, or hexadecimal) and click "Convert" to see it in other formats.</p>
+
+    <input type="text" id="input-value" placeholder="Enter a number" />
+    <button onclick="convertNumberSystem()">Convert</button>
+
+    <div id="result" class="result"></div>
+
+    <h2>Number System Table</h2>
+    <p>Below is a table showing conversions of numbers from 0 to 15 in Decimal, Binary, Octal, and Hexadecimal formats:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Decimal</th>
+                <th>Binary</th>
+                <th>Octal</th>
+                <th>Hexadecimal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table rows for numbers 0-15 -->
+            <tr><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+            <tr><td>2</td><td>10</td><td>2</td><td>2</td></tr>
+            <tr><td>3</td><td>11</td><td>3</td><td>3</td></tr>
+            <tr><td>4</td><td>100</td><td>4</td><td>4</td></tr>
+            <tr><td>5</td><td>101</td><td>5</td><td>5</td></tr>
+            <tr><td>6</td><td>110</td><td>6</td><td>6</td></tr>
+            <tr><td>7</td><td>111</td><td>7</td><td>7</td></tr>
+            <tr><td>8</td><td>1000</td><td>10</td><td>8</td></tr>
+            <tr><td>9</td><td>1001</td><td>11</td><td>9</td></tr>
+            <tr><td>10</td><td>1010</td><td>12</td><td>A</td></tr>
+            <tr><td>11</td><td>1011</td><td>13</td><td>B</td></tr>
+            <tr><td>12</td><td>1100</td><td>14</td><td>C</td></tr>
+            <tr><td>13</td><td>1101</td><td>15</td><td>D</td></tr>
+            <tr><td>14</td><td>1110</td><td>16</td><td>E</td></tr>
+            <tr><td>15</td><td>1111</td><td>17</td><td>F</td></tr>
+        </tbody>
+    </table>
+
+    <footer>
+        <p>&copy; 2024 Number System Converter. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function convertNumberSystem() {
+            const input = document.getElementById('input-value').value.trim();
+            const resultDiv = document.getElementById('result');
+
+            if (input === '') {
+                resultDiv.innerHTML = 'Please enter a value!';
+                resultDiv.style.display = 'block'; // Make sure it's visible
+                return;
+            }
+
+            let result = '';
+            if (/^[0-9]+$/.test(input)) {
+                const decimalValue = parseInt(input, 10);
+                
+                // Manual Binary conversion
+                let binaryValue = '';
+                let tempDecimal = decimalValue;
+                if (tempDecimal === 0) binaryValue = '0';
+                while (tempDecimal > 0) {
+                    binaryValue = (tempDecimal % 2) + binaryValue;
+                    tempDecimal = Math.floor(tempDecimal / 2);
+                }
+
+                // Manual Octal conversion
+                let octalValue = '';
+                tempDecimal = decimalValue;
+                if (tempDecimal === 0) octalValue = '0';
+                while (tempDecimal > 0) {
+                    octalValue = (tempDecimal % 8) + octalValue;
+                    tempDecimal = Math.floor(tempDecimal / 8);
+                }
+
+                // Manual Hexadecimal conversion
+                let hexValue = '';
+                const hexDigits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
+                tempDecimal = decimalValue;
+                if (tempDecimal === 0) hexValue = '0';
+                while (tempDecimal > 0) {
+                    hexValue = hexDigits[tempDecimal % 16] + hexValue;
+                    tempDecimal = Math.floor(tempDecimal / 16);
+                }
+
+                result = `Decimal: ${decimalValue} <br> Binary: ${binaryValue} <br> Octal: ${octalValue} <br> Hexadecimal: ${hexValue}`;
+            } else if (/^[01]+$/.test(input)) {
+                const binaryValue = input;
+                let decimalValue = 0;
+                let power = 0;
+                for (let i = binaryValue.length - 1; i >= 0; i--) {
+                    if (binaryValue[i] === '1') {
+                        decimalValue += Math.pow(2, power);
+                    }
+                    power++;
+                }
+
+                // Manual Octal conversion
+                let octalValue = '';
+                let tempDecimal = decimalValue;
+                if (tempDecimal === 0) octalValue = '0';
+                while (tempDecimal > 0) {
+                    octalValue = (tempDecimal % 8) + octalValue;
+                    tempDecimal = Math.floor(tempDecimal / 8);
+                }
+
+                // Manual Hexadecimal conversion
+                let hexValue = '';
+                const hexDigits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
+                tempDecimal = decimalValue;
+                if (tempDecimal === 0) hexValue = '0';
+                while (tempDecimal > 0) {
+                    hexValue = hexDigits[tempDecimal % 16] + hexValue;
+                    tempDecimal = Math.floor(tempDecimal / 16);
+                }
+
+                result = `Decimal: ${decimalValue} <br> Binary: ${binaryValue} <br> Octal: ${octalValue} <br> Hexadecimal: ${hexValue}`;
+            } else if (/^[0-7]+$/.test(input)) {
+                const octalValue = input;
+                let decimalValue = 0;
+                let power = 0;
+                for (let i = octalValue.length - 1; i >= 0; i--) {
+                    decimalValue += parseInt(octalValue[i]) * Math.pow(8, power);
+                    power++;
+                }
+
+                // Manual Binary conversion
+                let binaryValue = '';
+                let tempDecimal = decimalValue;
+                if (tempDecimal === 0) binaryValue = '0';
+                while (tempDecimal > 0) {
+                    binaryValue = (tempDecimal % 2) + binaryValue;
+                    tempDecimal = Math.floor(tempDecimal / 2);
+                }
+
+                // Manual Hexadecimal conversion
+                let hexValue = '';
+                const hexDigits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
+                tempDecimal = decimalValue;
+                if (tempDecimal === 0) hexValue = '0';
+                while (tempDecimal > 0) {
+                    hexValue = hexDigits[tempDecimal % 16] + hexValue;
+                    tempDecimal = Math.floor(tempDecimal / 16);
+                }
+
+                result = `Decimal: ${decimalValue} <br> Binary: ${binaryValue} <br> Octal: ${octalValue} <br> Hexadecimal: ${hexValue}`;
+            } else if (/^[0-9A-Fa-f]+$/.test(input)) {
+                const hexValue = input.toUpperCase();
+                let decimalValue = 0;
+                let power = 0;
+                const hexDigits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
+
+                for (let i = hexValue.length - 1; i >= 0; i--) {
+                    decimalValue += hexDigits.indexOf(hexValue[i]) * Math.pow(16, power);
+                    power++;
+                }
+
+                // Manual Binary conversion
+                let binaryValue = '';
+                let tempDecimal = decimalValue;
+                if (tempDecimal === 0) binaryValue = '0';
+                while (tempDecimal > 0) {
+                    binaryValue = (tempDecimal % 2) + binaryValue;
+                    tempDecimal = Math.floor(tempDecimal / 2);
+                }
+
+                // Manual Octal conversion
+                let octalValue = '';
+                tempDecimal = decimalValue;
+                if (tempDecimal === 0) octalValue = '0';
+                while (tempDecimal > 0) {
+                    octalValue = (tempDecimal % 8) + octalValue;
+                    tempDecimal = Math.floor(tempDecimal / 8);
+                }
+
+                result = `Decimal: ${decimalValue} <br> Binary: ${binaryValue} <br> Octal: ${octalValue} <br> Hexadecimal: ${hexValue}`;
+            } else {
+                resultDiv.innerHTML = 'Invalid input. Please enter a valid number!';
+                resultDiv.style.display = 'block'; // Make sure it's visible
+                return;
+            }
+
+            resultDiv.innerHTML = result;
+            resultDiv.style.display = 'block'; // Show result section
+        }
+    </script>
+</body>
+</html>
